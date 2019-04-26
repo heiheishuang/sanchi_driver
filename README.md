@@ -27,3 +27,5 @@ roslaunch sanchi_driver imu_100D2.launch
 ```shell
 roslaunch sanchi_driver rviz.launch
 ```
+
+后面会继续更新README.md
