@@ -1,3 +1,6 @@
+#ifndef SANCHIROSDRIVER_H_
+#define SANCHIROSDRIVER_H_
+
 #include <string>
 #include <queue>
 
@@ -39,3 +42,5 @@ namespace vwpp
     };
     
 } // namespace vwpp
+
+#endif
