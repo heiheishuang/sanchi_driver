@@ -65,8 +65,8 @@ namespace vwpp
 
         BoostSerialCommunicator* boost_serial_communicator;
 
-        const uint8_t* msg_stop;
-        const uint8_t* msg_start;
+        std::vector<uint8_t> msg_stop;
+        std::vector<uint8_t> msg_start;
 
     };
 

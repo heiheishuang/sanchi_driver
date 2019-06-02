@@ -1,3 +1,5 @@
+#include <utility>
+
 #include <sanchi_driver/SanchiSerialHardware.h>
 #include <sanchi_driver/utils.h>
 #include <eigen3/Eigen/Geometry> 
@@ -10,8 +12,8 @@ SanchiSerialHardware::SanchiSerialHardware(std::string model_, std::string port_
                                            boost_serial_base::flow_control::type fc_type_,
                                            boost_serial_base::parity::type pa_type_, 
                                            boost_serial_base::stop_bits::type st_type_):
-    model(model_),
-    port(port_),
+    model(std::move(model_)),
+    port(std::move(port_)),
     baud(baud_),
     msg_length(msg_length_),
     fc_type(fc_type_),
@@ -21,9 +23,10 @@ SanchiSerialHardware::SanchiSerialHardware(std::string model_, std::string port_
 
     uint8_t tmp_msg_start[6] = {0xA5, 0x5A, 0x04, 0x01, 0x05, 0xAA};
     uint8_t tmp_msg_stop[6]  = {0xA5, 0x5A, 0x04, 0x02, 0x06, 0xAA};
-    
-    this->msg_start = tmp_msg_start;
-    this->msg_stop  = tmp_msg_stop;
+
+    // TODO consider change to const
+    this->msg_start = std::vector<uint8_t>(std::begin(tmp_msg_start), std::end(tmp_msg_start));
+    this->msg_stop  = std::vector<uint8_t>(std::begin(tmp_msg_stop), std::end(tmp_msg_stop));
 
     this->boost_serial_communicator = new BoostSerialCommunicator(this->port, this->baud);
 
@@ -43,8 +46,6 @@ SanchiSerialHardware::SanchiSerialHardware(std::string model_, std::string port_
 SanchiSerialHardware::~SanchiSerialHardware()
 {
     delete   this->boost_serial_communicator;
-    delete[] this->msg_start;
-    delete[] this->msg_stop;
 }
 
 std::queue<SanchiSerialHardware::SanchiData> SanchiSerialHardware::readData()
