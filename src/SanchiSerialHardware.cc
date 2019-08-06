@@ -45,7 +45,7 @@ SanchiSerialHardware::SanchiSerialHardware(std::string model_, std::string port_
 
 SanchiSerialHardware::~SanchiSerialHardware()
 {
-    delete   this->boost_serial_communicator;
+    delete this->boost_serial_communicator;
 }
 
 std::queue<SanchiSerialHardware::SanchiData> SanchiSerialHardware::readData()

@@ -17,9 +17,11 @@ namespace vwpp
     {
     public:
         SanchiRosDriver();
+
         virtual ~SanchiRosDriver();
+
         void publishData();
-    
+
     private:
 
         SanchiSerialHardware* sanchi_serial_hardware;
@@ -40,7 +42,7 @@ namespace vwpp
         ros::Publisher imu_pub;
         ros::Publisher mag_pub;
     };
-    
+
 } // namespace vwpp
 
 #endif

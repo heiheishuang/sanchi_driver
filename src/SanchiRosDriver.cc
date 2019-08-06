@@ -3,13 +3,14 @@
 using namespace std;
 using namespace vwpp;
 
-SanchiRosDriver::SanchiRosDriver():
-    nh(ros::NodeHandle("~")),
-    model("100D2"),
-    port("/dev/ttyUSB0"),
-    baud(115200),
-    frame_id("imu_link"),
-    msg_length(40)
+
+SanchiRosDriver::SanchiRosDriver() :
+        nh(ros::NodeHandle("~")),
+        model("100D2"),
+        port("/dev/ttyUSB0"),
+        baud(115200),
+        frame_id("imu_link"),
+        msg_length(40)
 {
     this->node_name = ros::this_node::getName();
 
@@ -33,7 +34,7 @@ SanchiRosDriver::SanchiRosDriver():
     {
         ROS_WARN("%s, use the default port %s", this->node_name.c_str(), this->port.c_str());
     }
-    
+
     if (nh.hasParam("baud"))
     {
         nh.getParam("baud", this->baud);
@@ -55,9 +56,9 @@ SanchiRosDriver::SanchiRosDriver():
     }
 
     this->sanchi_serial_hardware = new SanchiSerialHardware(this->model,
-                                                    this->port,
-                                                    this->baud,
-                                                    this->msg_length);
+                                                            this->port,
+                                                            this->baud,
+                                                            this->msg_length);
 
     if (nh.hasParam("frame_id"))
     {
@@ -97,12 +98,10 @@ SanchiRosDriver::SanchiRosDriver():
 }
 
 
-
 SanchiRosDriver::~SanchiRosDriver()
 {
     delete this->sanchi_serial_hardware;
 }
-
 
 
 void SanchiRosDriver::publishData()
@@ -110,7 +109,7 @@ void SanchiRosDriver::publishData()
     this->que_sanchi_data_ = this->sanchi_serial_hardware->readData();
     if (this->que_sanchi_data_.size() == 1 || this->que_sanchi_data_.size() == 2)
     {
-        while( !(this->que_sanchi_data_.empty()) )
+        while (!(this->que_sanchi_data_.empty()))
         {
 
             this->msg_imu.header.stamp = ros::Time::now();
@@ -121,13 +120,13 @@ void SanchiRosDriver::publishData()
             this->msg_imu.orientation.y = this->que_sanchi_data_.front().q_.y;
             this->msg_imu.orientation.z = this->que_sanchi_data_.front().q_.z;
 
-            this->msg_imu.angular_velocity.x = this->que_sanchi_data_.front().av_.x; 
-            this->msg_imu.angular_velocity.y = this->que_sanchi_data_.front().av_.y; 
-            this->msg_imu.angular_velocity.z = this->que_sanchi_data_.front().av_.z; 
+            this->msg_imu.angular_velocity.x = this->que_sanchi_data_.front().av_.x;
+            this->msg_imu.angular_velocity.y = this->que_sanchi_data_.front().av_.y;
+            this->msg_imu.angular_velocity.z = this->que_sanchi_data_.front().av_.z;
 
-            this->msg_imu.linear_acceleration.x = this->que_sanchi_data_.front().la_.x; 
-            this->msg_imu.linear_acceleration.y = this->que_sanchi_data_.front().la_.y; 
-            this->msg_imu.linear_acceleration.z = this->que_sanchi_data_.front().la_.z; 
+            this->msg_imu.linear_acceleration.x = this->que_sanchi_data_.front().la_.x;
+            this->msg_imu.linear_acceleration.y = this->que_sanchi_data_.front().la_.y;
+            this->msg_imu.linear_acceleration.z = this->que_sanchi_data_.front().la_.z;
 
             this->imu_pub.publish(this->msg_imu);
 

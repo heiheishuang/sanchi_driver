@@ -12,11 +12,12 @@ namespace vwpp
     {
     public:
         // SanchiSerialHardware();
-        SanchiSerialHardware(std::string model_, std::string port_, int baud_, 
+        SanchiSerialHardware(std::string model_, std::string port_, int baud_,
                              int msg_length_,
-                             boost_serial_base::flow_control::type fc_type_ = boost_serial_base::flow_control::none, 
-                             boost_serial_base::parity::type pa_type_ = boost_serial_base::parity::none, 
+                             boost_serial_base::flow_control::type fc_type_ = boost_serial_base::flow_control::none,
+                             boost_serial_base::parity::type pa_type_ = boost_serial_base::parity::none,
                              boost_serial_base::stop_bits::type st_type = boost_serial_base::stop_bits::one);
+
         virtual ~SanchiSerialHardware();
 
 
@@ -36,10 +37,10 @@ namespace vwpp
             float y;
             float z;
         };
-        
+
         typedef Vector3f AngularVelocity;
         typedef Vector3f LinearAcceleration;
-        typedef Vector3f MagneticField; 
+        typedef Vector3f MagneticField;
 
         struct SanchiData
         {
@@ -49,8 +50,9 @@ namespace vwpp
             MagneticField mf_;
         };
 
-        std::queue<SanchiSerialHardware::SanchiData> readData(); 
-        std::queue<SanchiData> que_sanchi_data;        
+        std::queue<SanchiSerialHardware::SanchiData> readData();
+
+        std::queue<SanchiData> que_sanchi_data;
 
     private:
 
