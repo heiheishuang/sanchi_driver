@@ -103,6 +103,7 @@ int BoostSerialCommunicator::sendMessage(const std::vector<uint8_t> &vec_msg_)
         return (-1);
     }
 
+    boost::unique_lock<boost::mutex> unique_lock_send_msg(mutex_send_msg);
     write(fd_, msg_buffer, vec_msg_.size());
     return 1;
 }

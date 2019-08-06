@@ -8,6 +8,8 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 
+#include <boost/thread.hpp>
+
 
 namespace vwpp
 {
@@ -37,6 +39,8 @@ namespace vwpp
     private:
         boost::asio::serial_port* serial_port;
         int fd_;
+
+        boost::mutex mutex_send_msg;
 
     }; // class BoostSerialCommunicator 
 
