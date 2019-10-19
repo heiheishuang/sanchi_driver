@@ -4,7 +4,7 @@
         name="sanchi_driver_node"
         type="sanchi_driver_node"
         output="screen">
-    <param name="port" value="/dev/ttyUSB0"/>
+  <param name="port" value="/dev/imu"/>
     <param name="model" value="100D2"/>
     <param name="baud" value="115200"/>
     <param name="frame_id" value="imu_link"/>
